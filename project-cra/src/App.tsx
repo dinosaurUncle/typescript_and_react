@@ -1,5 +1,57 @@
 import * as React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, RouteComponentProps, Switch, Redirect, NavLink } from "react-router-dom";
+
+const ComponentHome = () => {
+  return (
+    <h3>Component_Home</h3>
+  );
+};
+
+const Post = (props: RouteComponentProps<{ postId: string}>) =>{
+  function geNextPost(){
+    const nextPostId = +props.match.params.postId+ 1;
+    const inputPostUrl = "/posts/" + nextPostId;    
+    props.history.push(inputPostUrl);
+  }
+
+  return (
+    <div>
+      <h3>Post {props.match.params.postId}</h3>
+      <button onClick={geNextPost}>click</button>
+      <p>{new URLSearchParams(props.location.search).get('body')}</p>
+    </div>
+  );
+};
+
+const PostList = (props: RouteComponentProps<{}>) => {
+
+  function innerPostList(){
+    return <h3>PostList</h3>
+  }
+  return (
+    <div>
+      <Route exact={true} path={props.match.url} render={innerPostList}/>
+      <Route path={props.match.url + '/:postId'} component={Post}/>
+    </div>
+  );
+};
+
+const NotFound =  () => {
+  return (
+    <h3>Not Found !!</h3>
+  );
+};
+
+
+const Admin = () => {
+  const isAdmin =false;
+  return isAdmin 
+  ? <h3>Admin</h3>
+  : <Redirect to="/"/>;
+  
+};
+
 
 import logo from './logo.svg';
 
@@ -74,11 +126,17 @@ class App extends React.Component<AppProps, AppState> {
   }
 
 
-  
+  public renderDocument = () => {
+    return <h3>Home</h3>
+  }
+  public renderDocument2 = () => {
+    return <h3>Intro</h3>
+  }
 
   public render() {
     console.log('render');
     return (
+      <Router>
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -97,8 +155,25 @@ class App extends React.Component<AppProps, AppState> {
           <h4>id: {this.state.objectUser.id}</h4>
           <h4>password: {this.state.objectUser.password}</h4>
           <button onClick={this._plusHundred}>초고속 레벨업</button>  
+          <nav>
+            <ul>
+              <li><NavLink exact={true} activeStyle= {{ fontSize: 24 }} to="/" >Home</NavLink></li>
+              <li><NavLink activeStyle= {{ fontSize: 24 }} to="/intro" >INTRO</NavLink></li>
+              <li><NavLink activeStyle= {{ fontSize: 24 }} to="/admin" >Admin</NavLink></li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route exact={true} path="/" component={ComponentHome} />
+            <Route path="/intro" render={this.renderDocument2} />
+            <Redirect from="/about" to="/intro" />
+            <Route path="/posts" component={PostList} />
+            <Route path="/admin" component={Admin} />
+            <Route component={NotFound} />
+          </Switch>
       </div>
+      </Router>
     );
+    
   }
 
   private _plusHundred(): void {

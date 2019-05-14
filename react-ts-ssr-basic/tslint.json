@@ -2,15 +2,7 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules": {
     "ordered-imports": [false],
-    "object-literal-sort-keys": [false],
-    "variable-name": [true,
-       "ban-keywords",
-        "check-format",
-         "allow-leading-underscore",
-          "allow-trailing-underscore",
-          "require-const-for-all-caps",
-           "allow-pascal-case",
-           "allow-snake-case"]
+    "object-literal-sort-keys": [false]
   },
   "linterOptions": {
     "exclude": [

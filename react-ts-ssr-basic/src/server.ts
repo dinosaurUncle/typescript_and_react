@@ -16,7 +16,5 @@ app.use('*', (req, res) => {
     // res.status(200).send(renderedHtml);
 });
 
-
 const server = http.createServer(app);
-
 server.listen(3000);

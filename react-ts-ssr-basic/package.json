@@ -13,7 +13,8 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build && tsc -p tsconfig.server.json",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "serve": "sudo yarn build && node build-server/server.js"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",

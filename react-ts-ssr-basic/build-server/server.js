@@ -25,8 +25,8 @@ staticFiles.forEach(file => {
 app.use('*', (req, res) => {
     const html = path.join(__dirname, '../build/index.html');
     const htmlData = fs.readFileSync(html).toString();
-    const ReactApp = ReactDOMServer.renderToString(React.createElement(App_1.default));
-    const renderedHtml = htmlData.replace('{{SSR}}', ReactApp);
+    const ReactApp = ReactDOMServer.renderToString(React.createElement(App_1.default, {}, req.baseUrl));
+    const renderedHtml = htmlData.replace('<div id="root">{{SSR}}</div>', '<div id="root">' + ReactApp + '<script id="initial-data" type="text/plain" data-json="' + req.baseUrl + '"></script>');
     res.status(200).send(renderedHtml);
     // const ReactApp = ReactDOMServer.renderToString(React.createElement);
     // const renderedHtml = htmlData.replace('{{SSR}}', ReactApp);

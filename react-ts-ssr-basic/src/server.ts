@@ -30,8 +30,8 @@ app.use('*', (req, res) => {
     const html = path.join(__dirname, '../build/index.html');
     const htmlData = fs.readFileSync(html).toString();
 
-    const ReactApp = ReactDOMServer.renderToString(React.createElement(App));
-    const renderedHtml = htmlData.replace('{{SSR}}', ReactApp);
+    const ReactApp = ReactDOMServer.renderToString(React.createElement(App, {}, req.baseUrl));
+    const renderedHtml = htmlData.replace('<div id="root">{{SSR}}</div>', '<div id="root">'+ ReactApp +'<script id="initial-data" type="text/plain" data-json="'+ req.baseUrl +'"></script>');
 
     res.status(200).send(renderedHtml);
 

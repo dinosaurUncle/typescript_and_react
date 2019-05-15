@@ -6,6 +6,14 @@ const App_1 = require("./App");
 require("./index.css");
 require("./App.css");
 const registerServiceWorker_1 = require("./registerServiceWorker");
-ReactDOM.render(React.createElement(App_1.default, null), document.getElementById('root'));
+const initialDataDom = document.querySelector('#initial-data');
+let data = '';
+if (initialDataDom !== null) {
+    const dataJson = initialDataDom.getAttribute('data-json');
+    if (dataJson !== null) {
+        data = dataJson;
+    }
+}
+ReactDOM.render(React.createElement(App_1.default, null, data), document.getElementById('root'));
 registerServiceWorker_1.default();
 //# sourceMappingURL=index.js.map

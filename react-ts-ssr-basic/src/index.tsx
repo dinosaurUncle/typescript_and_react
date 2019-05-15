@@ -5,8 +5,16 @@ import './index.css';
 import './App.css';
 import registerServiceWorker from './registerServiceWorker';
 
+const initialDataDom = document.querySelector('#initial-data');
+let data: string = '';
+if (initialDataDom !== null){
+  const dataJson = initialDataDom.getAttribute('data-json');
+  if (dataJson !== null) {
+    data = dataJson;
+  }
+}
 ReactDOM.render(
-  <App />,
+  <App>{data}</App>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
